@@ -5,10 +5,17 @@ import { useState } from "react";
 function App() {
   const [contacts, setContacts] = useState(contactsList.slice(0, 5));
 
-  const randomButton = () => {
-    let randomContact = Math.floor(Math.random() * contactsList.length);
+  const addRandomContact = () => {
+    let randomIndex = Math.floor(Math.random() * contactsList.length);
     let contactsCopy = [...contacts];
-    contactsCopy.push(contactsList[randomContact]);
+
+    const randomContact = contactsList[randomIndex];
+
+    const checkIndex = contactsCopy.findIndex((element) => element.id === randomContact.id);
+
+    if (checkIndex === -1) {
+      contactsCopy.push(randomContact);
+    }
     setContacts(contactsCopy);
   };
 
@@ -51,7 +58,7 @@ function App() {
             Sort by name
           </button>
         </div>
-        <button className="btn btn-outline-dark" onClick={randomButton}>
+        <button className="btn btn-outline-dark" onClick={() => addRandomContact()}>
           Add random Contact
         </button>
       </div>
